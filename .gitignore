@@ -1,0 +1,27 @@
+# OS Stuff
+.DS_Store
+
+# JS/NPM Stuff
+frontend/node_modules/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+webpack-stats.json
+
+# Python Stuff
+__pycache__/
+*.pyc
+db.sqlite3
+venv/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Data
+media/
