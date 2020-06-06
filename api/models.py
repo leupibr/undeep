@@ -4,10 +4,10 @@ import logging
 import os
 import subprocess
 
+import joblib
 import pandas
 from django.core.files.storage import default_storage
 from django.db import models
-from sklearn.externals import joblib
 from whoosh.index import open_dir
 
 from api.utils import hsize, find_dates
