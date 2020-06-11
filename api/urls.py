@@ -21,8 +21,8 @@ urlpatterns = [
 
     re_path(r'^categories/?$', views.categories.categories),
     re_path(r'^categories/count/?$', views.categories.count),
-    re_path(r'^categories/random/?$', views.categories.random),
-    re_path(r'^categories/(?P<name>\w{1,20})/?$', views.categories.category),
+    re_path(r'^categories/_random/?$', views.categories.random),
+    re_path(r'^categories/(?P<name>\w{1,20})(?<!_random)/?$', views.categories.category),
     re_path(r'^categories/(?P<name>\w{1,20})/assign/?$', views.categories.assign),
     re_path(r'^categories/(?P<name>\w{1,20})/documents(/(?P<offset>\d+)/(?P<limit>\d+))?/?$', views.categories.documents),
 ]

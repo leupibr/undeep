@@ -37,7 +37,7 @@
                     });
             },
             loadRandomName() {
-                axios.get('categories/random')
+                axios.get('categories/_random')
                     .then((response) => {
                         this.randomName = response.data;
                     });
