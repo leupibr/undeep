@@ -1,6 +1,16 @@
 <template>
     <div class="container">
-        <h1 class="title">{{getTitle}}</h1>
+        <div class="content">
+            <label v-if="isCategory">
+                <input class="title input is-fullwidth"
+                       type="text"
+                       v-if="isCategory"
+                       v-model="category"
+                       @change="changeName()"
+                />
+            </label>
+            <h1 v-else class="title">{{getTitle}}</h1>
+        </div>
 
         <div class="content" v-if="isCategory">
             <div class="buttons is-right">
@@ -107,6 +117,15 @@
                         this.documents = d.documents;
                     });
             },
+            changeName() {
+                axios.put(`categories/${this.$route.params.category}`, { name: this.category })
+                    .then(() => {
+                        this.$router.replace({
+                            name: 'ViewCategory',
+                            params: { category: this.category },
+                        });
+                    });
+            },
             deleteCategory() {
                 this.showConfirmation = false;
                 axios.delete(`categories/${this.category}`)
@@ -116,6 +135,12 @@
             },
         },
         beforeRouteUpdate(to, from, next) {
+            // skip intercept if it's a renaming
+            if (from.params.category !== to.params.category) {
+                next();
+                return;
+            }
+
             this.order = to.query.o;
             this.category = to.params.category;
             this.loadDocuments();

@@ -1,5 +1,4 @@
-import json
-
+import re
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -53,10 +52,18 @@ def category(request, name):
         )
 
     if request.method in ('POST', 'PUT'):
-        o, c = Category.objects.update_or_create(
-            name=name
-        )
-        return Response(None, status.HTTP_201_CREATED if c else status.HTTP_204_NO_CONTENT)
+        item, created = Category.objects.update_or_create(name=name)
+        if created:
+            return Response(None, status.HTTP_201_CREATED)
+
+        if request.data.get('name'):
+            name = request.data.get('name', name)
+            if not re.match(r'^(\w{1,10})(?<!^_random$)$', name):
+                return Response({'message': 'Bad name provided!'}, status.HTTP_400_BAD_REQUEST)
+            item.name = name
+            item.save()
+
+        return Response(None, status.HTTP_204_NO_CONTENT)
 
     if request.method == 'DELETE':
         c = get_object_or_404(Category, name=name)
