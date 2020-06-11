@@ -1,10 +1,10 @@
 import os
 import pathlib
 
+import joblib
 import pandas
 from django.core.files.storage import default_storage
 from django.core.management.base import BaseCommand
-from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.model_selection import train_test_split
@@ -30,7 +30,7 @@ class Command(BaseCommand):
         columns = 'Category,Document,Content'.split(',')
 
         documents = Document.objects.filter(method__in={Document.MANUAL, Document.CONFIRMED})
-        df = pandas.DataFrame([(d.category.name, d.path, d.content) for d in documents], columns=columns)
+        df = pandas.DataFrame([(d.category.pk, d.path, d.content) for d in documents], columns=columns)
 
         X_train, X_test, y_train, y_test = train_test_split(df.Content, df.Category, random_state=0)
 
@@ -41,7 +41,8 @@ class Command(BaseCommand):
             stop_words=get_stop_words('de'))
 
         X_train = vectorizer.fit_transform(X_train).toarray()
-        classifier = LinearSVC().fit(X_train, y_train)
+        # noinspection PyTypeChecker
+        classifier: LinearSVC = LinearSVC().fit(X_train, y_train)
 
         if options.get('verbosity') > 1:
             y_pred = classifier.predict(vectorizer.transform(X_test))

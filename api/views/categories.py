@@ -28,6 +28,18 @@ def count(request):
     return Response(Category.objects.all().count())
 
 
+@api_view()
+def random(request):
+    from random import choice
+    names = {'Avalanche', 'Blizzard', 'Cyclone', 'Dream', 'Earthquake', 'Hailstorm', 'Hurricane', 'Illusion',
+             'Nightmare', 'Ocean', 'Snowstorm', 'Storm', 'Tempest', 'Thunder', 'Thunderstorm', 'Tornado', 'Twister',
+             'Typhoon', 'Vision', 'Wave', 'Windstorm', 'Arbiter', 'Breaker', 'Broker', 'Catcher', 'Discoverer',
+             'Examiner', 'Explorer', 'Finder', 'Guide', 'Inspector', 'Mediator', 'Patrol', 'Pioneer', 'Precursor',
+             'Procurer', 'Scout', 'Searcher', 'Surfer', 'Thrower', 'Vanguard'}
+    free_names = list(names - set(Category.objects.values_list('name', flat=True)))
+    return Response(choice(free_names))
+
+
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def category(request, name):
     if request.method == 'GET':

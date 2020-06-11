@@ -83,7 +83,7 @@ class Document(models.Model):
         X_uploaded = vectorizer.transform(df.Content)
         df.Category = classifier.predict(X_uploaded)
         for index, item in df.iterrows():
-            item.Document.category = Category.objects.get(name=item.Category)
+            item.Document.category = Category.objects.get(pk=item.Category)
             item.Document.method = Document.AUTO
 
     @staticmethod
@@ -160,7 +160,7 @@ class Document(models.Model):
 
         X_uploaded = vectorizer.transform([self.content])
         category = classifier.predict(X_uploaded)
-        self.category = Category.objects.get(name=category[0])
+        self.category = Category.objects.get(pk=category[0])
         self.method = Document.AUTO
 
     def find_dates(self, lower_bound=None, upper_bound=None):
