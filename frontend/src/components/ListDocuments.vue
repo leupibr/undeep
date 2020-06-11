@@ -123,6 +123,14 @@
                         this.$router.replace({
                             name: 'ViewCategory',
                             params: { category: this.category },
+                            query: this.$route.query,
+                        });
+                    })
+                    .catch((error) => {
+                        this.$notify({
+                            title: 'Unable to rename category',
+                            text: `(${error.response.status}) ${error.response.data.message}`,
+                            type: 'is-danger',
                         });
                     });
             },
@@ -130,7 +138,7 @@
                 this.showConfirmation = false;
                 axios.delete(`categories/${this.category}`)
                     .then(() => {
-                        this.$router.go(-1);
+                        this.$router.replace({ name: 'Home' });
                     });
             },
         },

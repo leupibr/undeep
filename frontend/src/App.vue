@@ -5,6 +5,16 @@
         <main id="view">
             <router-view :key="$route.fullPath"/>
         </main>
+
+        <notifications>
+            <template slot="body" slot-scope="props">
+                <div :class="`notification mt-3 mr-3 ${props.item.type}`">
+                    <button class="delete" @click="props.close"></button>
+                    <p class="has-text-weight-bold" v-if="props.item.title">{{props.item.title}}</p>
+                    <p v-html="props.item.text"></p>
+                </div>
+            </template>
+        </notifications>
         <Upload/>
     </div>
 </template>
