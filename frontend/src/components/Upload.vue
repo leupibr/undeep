@@ -1,9 +1,9 @@
 <template>
     <div>
         <form id="file-drag-drop" ref="fileform" class="box has-text-grey-light">
-      <span class="drop-files">
-        <i class="fas fa-upload fa-4x"></i>
-      </span>
+            <span class="drop-files">
+                <i class="fas fa-upload fa-4x"></i>
+            </span>
         </form>
     </div>
 </template>

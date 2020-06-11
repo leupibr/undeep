@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'bulma/css/bulma.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free';
+import Notifications from 'vue-notification';
 
 import App from './App';
 import router from './router';
@@ -18,6 +19,8 @@ axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 Vue.prototype.$eventBus = new Vue();
 
 Vue.use(require('vue-shortkey'));
+
+Vue.use(Notifications);
 
 Vue.filter('truncate', (text, length, suffix = '…') => {
     if (text.length <= length) return text;

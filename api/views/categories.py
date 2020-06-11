@@ -1,5 +1,4 @@
-import json
-
+import re
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -28,6 +27,18 @@ def count(request):
     return Response(Category.objects.all().count())
 
 
+@api_view()
+def random(request):
+    from random import choice
+    names = {'Avalanche', 'Blizzard', 'Cyclone', 'Dream', 'Earthquake', 'Hailstorm', 'Hurricane', 'Illusion',
+             'Nightmare', 'Ocean', 'Snowstorm', 'Storm', 'Tempest', 'Thunder', 'Thunderstorm', 'Tornado', 'Twister',
+             'Typhoon', 'Vision', 'Wave', 'Windstorm', 'Arbiter', 'Breaker', 'Broker', 'Catcher', 'Discoverer',
+             'Examiner', 'Explorer', 'Finder', 'Guide', 'Inspector', 'Mediator', 'Patrol', 'Pioneer', 'Precursor',
+             'Procurer', 'Scout', 'Searcher', 'Surfer', 'Thrower', 'Vanguard'}
+    free_names = list(names - set(Category.objects.values_list('name', flat=True)))
+    return Response(choice(free_names))
+
+
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def category(request, name):
     if request.method == 'GET':
@@ -41,10 +52,18 @@ def category(request, name):
         )
 
     if request.method in ('POST', 'PUT'):
-        o, c = Category.objects.update_or_create(
-            name=name
-        )
-        return Response(None, status.HTTP_201_CREATED if c else status.HTTP_204_NO_CONTENT)
+        item, created = Category.objects.update_or_create(name=name)
+        if created:
+            return Response(None, status.HTTP_201_CREATED)
+
+        if request.data.get('name'):
+            name = request.data.get('name', name)
+            if not re.match(r'^(\w{1,10})(?<!^_random$)$', name):
+                return Response({'message': 'Bad name provided!'}, status.HTTP_400_BAD_REQUEST)
+            item.name = name
+            item.save()
+
+        return Response(None, status.HTTP_204_NO_CONTENT)
 
     if request.method == 'DELETE':
         c = get_object_or_404(Category, name=name)

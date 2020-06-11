@@ -93,36 +93,24 @@
                    class="box" style="width:100%;height:100vh;" type="application/pdf"/>
         </div>
 
-        <div class="modal is-active" v-if="showConfirmation">
-            <div class="modal-background" v-on:click="showConfirmation = false"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Delete {{details.name}}?</p>
-                    <a class="delete"
-                       v-on:click="showConfirmation = false"
-                       aria-label="close"></a>
-                </header>
-                <section class="modal-card-body">
-                    Do you really want to delete this document <b>irreversible</b>?
-                </section>
-                <footer class="modal-card-foot">
-                    <a class="button is-danger"
-                       v-on:click="deleteDocument()">Yes</a>
-                    <a class="button"
-                       v-on:click="showConfirmation = false">Cancel</a>
-                </footer>
-            </div>
-        </div>
+        <DeleteConfirmation
+            :title="`Delete ${details.name}?`"
+            @confirm="deleteDocument"
+            @abort="showConfirmation = false"
+            v-if="showConfirmation">
+            <p>Do you really want to delete this category <b>irreversible</b>?</p>
+        </DeleteConfirmation>
     </div>
 </template>
 
 <script>
     import Datepicker from 'vuejs-datepicker';
     import axios from 'axios';
+    import DeleteConfirmation from './DeleteConfirmation';
 
     export default {
         name: 'ViewDocument',
-        components: { Datepicker },
+        components: { DeleteConfirmation, Datepicker },
         data() {
             return {
                 details: null,

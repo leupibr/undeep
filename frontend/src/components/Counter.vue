@@ -72,6 +72,7 @@
         mounted() {
             this.$eventBus.$on('store-changed', this.updateDocumentCount);
             this.$eventBus.$on('store-changed', this.updateStatistics);
+            this.$eventBus.$on('category-changed', this.updateCategoryCount);
         },
     };
 </script>

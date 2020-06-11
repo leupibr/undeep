@@ -5,6 +5,13 @@
                 v-for="c in categories"
                 v-bind:key="c.name"
                 v-bind:value="c"/>
+
+            <div class="column has-text-centered is-one-fifth" v-if="randomName">
+                <a v-on:click="this.createRandomCategory" class="box has-text-info category">
+                    <i class="fas fa-folder-plus fa-5x symbol has-text-success"/>
+                    <span class="heading">{{randomName}}</span>
+                </a>
+            </div>
         </div>
     </div>
 </template>
@@ -17,7 +24,10 @@
         name: 'Categories',
         components: { CategoryElement },
         data() {
-            return { categories: null };
+            return {
+                categories: null,
+                randomName: null,
+            };
         },
         methods: {
             loadCategories() {
@@ -26,9 +36,24 @@
                         this.categories = response.data;
                     });
             },
+            loadRandomName() {
+                axios.get('categories/_random')
+                    .then((response) => {
+                        this.randomName = response.data;
+                    });
+            },
+            createRandomCategory() {
+                axios.post(`categories/${this.randomName}`, {})
+                    .then(() => {
+                        this.loadCategories();
+                        this.loadRandomName();
+                        this.$eventBus.$emit('category-changed');
+                    });
+            },
         },
         beforeMount() {
             this.loadCategories();
+            this.loadRandomName();
         },
     };
 </script>
