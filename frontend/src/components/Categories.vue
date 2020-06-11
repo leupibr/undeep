@@ -7,13 +7,10 @@
                 v-bind:value="c"/>
 
             <div class="column has-text-centered is-one-fifth" v-if="randomName">
-                <router-link
-                    :to="{ name: 'CreateCategory' }"
-                    tag="a"
-                    class="box has-text-info category">
+                <a v-on:click="this.createRandomCategory" class="box has-text-info category">
                     <i class="fas fa-folder-plus fa-5x symbol has-text-success"/>
                     <span class="heading">{{randomName}}</span>
-                </router-link>
+                </a>
             </div>
         </div>
     </div>
@@ -38,14 +35,25 @@
                     .then((response) => {
                         this.categories = response.data;
                     });
+            },
+            loadRandomName() {
                 axios.get('categories/random')
                     .then((response) => {
                         this.randomName = response.data;
                     });
             },
+            createRandomCategory() {
+                axios.post(`categories/${this.randomName}`, {})
+                    .then(() => {
+                        this.loadCategories();
+                        this.loadRandomName();
+                        this.$eventBus.$emit('category-changed');
+                    });
+            },
         },
         beforeMount() {
             this.loadCategories();
+            this.loadRandomName();
         },
     };
 </script>
