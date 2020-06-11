@@ -40,7 +40,14 @@ module.exports = {
     'overrides': [{
         'files': ['*.vue'],
         'rules': {
-            'indent': 'off'
+            'indent': 'off',
+            'max-len': ['error', {
+                'code': 120,
+                'ignoreComments': true
+            }],
+            'object-curly-newline': ['error', {
+                'ObjectExpression': { 'consistent': true }
+            }]
         }
     }]
 };

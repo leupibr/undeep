@@ -11,6 +11,8 @@ export default new Router({
         { path: '/', name: 'Home', component: Home },
         { path: '/view/:id', name: 'ViewDocument', component: ViewDocument },
         { path: '/category/:category', name: 'ViewCategory', component: ListDocuments },
-        { path: '/recent/', name: 'Recent', query: { o: 'uploaded' }, component: ListDocuments },
+        {
+            path: '/recent/', name: 'Recent', query: { o: 'uploaded' }, component: ListDocuments,
+        },
     ],
 });

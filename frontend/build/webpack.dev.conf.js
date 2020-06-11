@@ -1,4 +1,5 @@
 'use strict';
+
 const utils = require('./utils');
 const webpack = require('webpack');
 const config = require('../config');
@@ -10,6 +11,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const portfinder = require('portfinder');
 const BundleTracker = require('webpack-bundle-tracker');
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
@@ -53,15 +55,21 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
         new webpack.NoEmitOnErrorsPlugin(),
         // copy custom static assets
-        new CopyWebpackPlugin([
-            {
+        new CopyWebpackPlugin({
+            patterns: [{
                 from: path.resolve(__dirname, '../src/assets/'),
                 to: config.dev.assetsSubDirectory,
-                ignore: ['.*']
-            }
-        ]),
-        new BundleTracker({ filename: 'webpack-stats.json' }),
-        new WriteFilePlugin()
+                globOptions: {
+                    ignore: ['.*']
+                }
+            }]
+        }),
+        new BundleTracker({
+            path: '.',
+            filename: 'webpack-stats.json',
+        }),
+        new WriteFilePlugin(),
+        new VueLoaderPlugin()
     ]
 });
 
