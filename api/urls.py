@@ -3,6 +3,9 @@ from django.urls import re_path
 from api import views
 
 urlpatterns = [
+    re_path(r'^login/?$', views.auth.login),
+    re_path(r'^logout/?$', views.auth.logout),
+
     re_path(r'^management/recreate-index/?$', views.management.recreate_index),
     re_path(r'^management/learn-categories/?$', views.management.learn_categories),
 

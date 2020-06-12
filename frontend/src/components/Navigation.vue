@@ -10,7 +10,7 @@
                 </router-link>
             </div>
 
-            <div class="navbar-menu">
+            <div class="navbar-menu" v-if="this.$store.getters.isLoggedIn">
                 <div class="navbar-start">
                     <div class="navbar-item has-dropdown is-hoverable">
                         <router-link to="/" tag="a" class="navbar-link">Documents</router-link>
@@ -69,6 +69,11 @@
                                 <span class="icon has-text-grey"><i class="fas fa-user-graduate"></i></span>
                                 <span>Learn Categories</span>
                             </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" v-on:click="this.logout">
+                                <span class="icon has-text-grey"><i class="fa fa-sign-out"></i></span>
+                                <span>Logout</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -79,6 +84,7 @@
 
 <script>
     import axios from 'axios';
+    import auth from '../services/auth';
 
     export default {
         name: 'Navigation',
@@ -143,6 +149,11 @@
                     .then(() => {
                         this.$eventBus.$emit('store-changed');
                     });
+            },
+            async logout() {
+                await auth.logout();
+                await this.$store.dispatch('logout');
+                await this.$router.push({ name: 'Login' });
             },
         },
     };

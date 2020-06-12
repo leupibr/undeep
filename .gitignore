@@ -22,6 +22,7 @@ venv/
 *.ntvs*
 *.njsproj
 *.sln
+*.swp
 
 # Data
 media/

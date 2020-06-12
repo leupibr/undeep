@@ -3,7 +3,7 @@
         <Navigation/>
 
         <main id="view">
-            <router-view :key="$route.fullPath"/>
+            <router-view :key="$route.fullPath" />
         </main>
 
         <notifications>
