@@ -15,7 +15,8 @@
                 </div>
             </template>
         </notifications>
-        <Upload/>
+
+        <Upload v-if="this.$store.getters.isLoggedIn"/>
     </div>
 </template>
 

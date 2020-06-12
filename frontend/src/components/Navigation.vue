@@ -71,7 +71,8 @@
                             </a>
                             <hr class="navbar-divider">
                             <a class="navbar-item" v-on:click="this.logout">
-                                <span class="icon has-text-grey"><i class="fa fa-sign-out"></i></span>
+<!--                                <span class="icon has-text-grey"><i class="fa fa-sign-out"></i></span>-->
+                                <span class="icon has-text-grey"><i class="fa fa-sign-out-alt"></i></span>
                                 <span>Logout</span>
                             </a>
                         </div>
