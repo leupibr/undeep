@@ -4,26 +4,18 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-4 box">
-                        <div class="field">
-                            <label for="username" class="label">Username</label>
-                            <div class="control has-icons-left">
-                                <input id="username" name="username" type="text" v-model="username"
-                                       placeholder="j.doe" class="input" required>
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-user-circle"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="password" class="label">Password</label>
-                            <div class="control has-icons-left">
-                                <input id="password" name="password" type="password" v-model="password"
-                                       placeholder="*******" class="input" required>
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-lock"></i>
-                                </span>
-                            </div>
-                        </div>
+                        <field label="Username"
+                               name="username"
+                               type="text"
+                               placeholder="j.doe"
+                               icon="fa fa-user-circle"
+                               v-model="username"/>
+                        <field label="Password"
+                               name="password"
+                               type="password"
+                               placeholder="*******"
+                               icon="fa fa-lock"
+                               v-model="password"/>
                         <div class="field">
                             <button class="button is-success" v-on:click="login()">Login</button>
                         </div>
@@ -35,7 +27,23 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     import auth from '../services/auth';
+
+    Vue.component('field', {
+        props: ['label', 'name', 'type', 'placeholder', 'icon'],
+        template: `
+            <div class="field">
+                <label :for="name" class="label">{{label}}</label>
+                <div class="control has-icons-left">
+                    <input :id="name" :name="name" :type="type" :placeholder="placeholder"
+                           :value="value" @input="$emit('input', $event.target.value)"
+                           class="input" required>
+                    <span class="icon is-small is-left"><i :class="icon"></i></span>
+                </div>
+            </div>
+        `,
+    });
 
     export default {
         name: 'Login',
