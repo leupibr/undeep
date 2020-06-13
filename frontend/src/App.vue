@@ -3,7 +3,7 @@
         <Navigation/>
 
         <main id="view">
-            <router-view :key="$route.fullPath"/>
+            <router-view :key="$route.fullPath" />
         </main>
 
         <notifications>
@@ -15,7 +15,8 @@
                 </div>
             </template>
         </notifications>
-        <Upload/>
+
+        <Upload v-if="this.$store.getters.isLoggedIn"/>
     </div>
 </template>
 

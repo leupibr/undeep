@@ -8,13 +8,27 @@ import Notifications from 'vue-notification';
 
 import App from './App';
 import router from './router';
+import store from './store';
 
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL = 'api/';
-// axios.defaults.baseURL = 'http://localhost:8000/api/';
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+
+if (store.state.token) {
+    axios.defaults.headers.common.Authorization = `Token ${store.state.token}`;
+}
+
+router.beforeEach((to, from, next) => {
+    if (store.getters.isLoggedIn) return next();
+
+    if (to.matched.some((record) => record.meta.requiresAuth === undefined
+        || record.meta.requiresAuth === true)) {
+        return next({ name: 'Login' });
+    }
+    return next();
+});
 
 Vue.prototype.$eventBus = new Vue();
 
@@ -46,6 +60,7 @@ Vue.filter('moment', (text, format) => moment(text).format(format));
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>',
 });
