@@ -8,7 +8,7 @@
                             <label for="username" class="label">Username</label>
                             <div class="control has-icons-left">
                                 <input id="username" name="username" type="text" v-model="username"
-                                       placeholder="johndoe" class="input" required>
+                                       placeholder="j.doe" class="input" required>
                                 <span class="icon is-small is-left">
                                     <i class="fa fa-user-circle"></i>
                                 </span>

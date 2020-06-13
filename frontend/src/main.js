@@ -20,6 +20,16 @@ if (store.state.token) {
     axios.defaults.headers.common.Authorization = `Token ${store.state.token}`;
 }
 
+router.beforeEach((to, from, next) => {
+    if (store.getters.isLoggedIn) return next();
+
+    if (to.matched.some((record) => record.meta.requiresAuth === undefined
+        || record.meta.requiresAuth === true)) {
+        return next({ name: 'Login' });
+    }
+    return next();
+});
+
 Vue.prototype.$eventBus = new Vue();
 
 Vue.use(require('vue-shortkey'));
