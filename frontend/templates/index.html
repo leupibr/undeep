@@ -7,9 +7,13 @@
   </head>
   <body>
     {% load render_bundle from webpack_loader %}
+    {% render_bundle 'vendor' 'css' %}
+    {% render_bundle 'runtime' 'css' %}
+    {% render_bundle 'app' 'css' %}
     <div id="app"></div>
-    <!-- built files will be auto injected -->
-    {% render_bundle 'app' %}
+    {% render_bundle 'vendor' 'js' %}
+    {% render_bundle 'runtime' 'js' %}
+    {% render_bundle 'app' 'js' %}
   </body>
 </html>
 
