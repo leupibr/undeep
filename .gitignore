@@ -26,3 +26,9 @@ venv/
 
 # Data
 media/
+
+# packaging stuff
+.eggs
+*.egg-info
+build/
+dist/
