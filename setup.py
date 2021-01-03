@@ -16,7 +16,7 @@ class BuildPyCommand(build_py):
         super(BuildPyCommand, self).initialize_options()
         self.distribution.command_options.update({
             'npm_install': dict(prefix=('BuildPyCommand', 'frontend')),
-            'npm_build': dict(prefix=('BuildPyCommand', 'frontend'))
+            'npm_build': dict(prefix=('BuildPyCommand', 'frontend')),
         })
 
     def run(self):
@@ -70,6 +70,7 @@ class NpmBuildCommand(NpmCommand):
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(
     name='undeep',
     version='0.1.1',
@@ -84,20 +85,20 @@ setuptools.setup(
     license='MIT',
     url='https://github.com/leupibr/undeep',
     classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Environment :: Web Environment",
-        "Framework :: Django :: 3.0",
-        "Framework :: Django",
-        "Intended Audience :: End Users/Desktop",
-        "License :: OSI Approved :: MIT License",
-        "Natural Language :: English",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python",
-        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
-        "Topic :: Internet :: WWW/HTTP",
+        'Development Status :: 3 - Alpha',
+        'Environment :: Web Environment',
+        'Framework :: Django :: 3.0',
+        'Framework :: Django',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Topic :: Internet :: WWW/HTTP',
     ],
     python_requires='>=3.6',
     setup_requires=['wheel', 'setuptools_scm'],
