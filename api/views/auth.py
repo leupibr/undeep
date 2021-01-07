@@ -15,7 +15,7 @@ def login(request):
     if user:
         auth.login(request, user)
         token = Token.objects.get_or_create(user=user)[0]
-        return Response({'user': username, 'token': token.pk}, status.HTTP_204_NO_CONTENT)
+        return Response({'user': username, 'token': token.pk}, status.HTTP_200_OK)
     return Response({'message': 'Invalid username or password'}, status.HTTP_400_BAD_REQUEST)
 
 
