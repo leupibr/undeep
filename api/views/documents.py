@@ -63,6 +63,7 @@ def download(request, path):
         response['Content-Disposition'] = f'attachment; filename={document.name}.pdf'
     else:
         response['Content-Disposition'] = f'filename={document.name}.pdf'
+        response['X-Frame-Options'] = 'sameorigin'
     return response
 
 
