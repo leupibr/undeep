@@ -161,7 +161,7 @@
                 axios.post(`documents/${this.$route.params.id}`, this.details);
             },
             changeDate() {
-                axios.post(`documents/${this.$route.params.id}/details`, this.details);
+                axios.post(`documents/${this.$route.params.id}`, this.details);
             },
             confirmDelete() {
                 this.showConfirmation = true;
