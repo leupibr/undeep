@@ -172,7 +172,7 @@ def _render_documents(documents: [Document]):
         'name': r.name,
         'path': r.path,
         'size': r.size,
-        'category': r.category.name,
+        'category': r.category.name if r.category else None,
         'date': r.date,
         'method': r.get_method_display(),
         'uploaded': r.uploaded,
