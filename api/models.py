@@ -57,7 +57,8 @@ class Document(models.Model):
     def index_multiple(documents):
         index_dir = os.path.join(default_storage.base_location, 'index')
         if not os.path.exists(index_dir):
-            raise FileExistsError()
+            logging.error("index doesn't exist, please create first")
+            raise FileNotFoundError()
 
         ix = open_dir(index_dir)
         writer = ix.writer()
@@ -181,5 +182,3 @@ class Document(models.Model):
 
     def __repr__(self):
         return f'<Document {self.name!r}>'
-
-
